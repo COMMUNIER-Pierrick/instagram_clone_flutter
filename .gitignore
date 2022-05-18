@@ -30,7 +30,7 @@
 .pub-cache/
 .pub/
 /build/
-lib/config/
+lib/config/web.dart
 android/app/google-services.json
 
 # Web related
