@@ -41,7 +41,7 @@ class _PostCardState extends State<PostCard> {
     }catch(e){
       showSnackBar(e.toString(), context);
     }
-    setState(() {
+    if(mounted) setState(() {
 
     });
   }
@@ -143,7 +143,7 @@ class _PostCardState extends State<PostCard> {
                   user.uid,
                   widget.snap['likes'],
                 );
-                setState(() {
+                if(mounted) setState(() {
                   isLikeAnimating = true;
                 });
               },
@@ -177,7 +177,7 @@ class _PostCardState extends State<PostCard> {
                         milliseconds: 400,
                       ),
                       onEnd: () {
-                        setState(() {
+                        if(mounted) setState(() {
                           isLikeAnimating = false;
                         });
                       },
