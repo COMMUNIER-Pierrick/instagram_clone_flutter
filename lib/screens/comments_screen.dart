@@ -1,17 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/ressources/firestone_methods.dart';
-import 'package:instagram_clone/screens/feed_screen.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:provider/provider.dart';
 
 import '../models/user.dart';
 import '../providers/user_provider.dart';
+import '../responsive/mobile_screen_layout.dart';
 import '../responsive/web_screen_layout.dart';
+import '../utils/dimensions.dart';
 import '../widgets/comment_card.dart';
 
 class CommentsScreen extends StatefulWidget {
-  final snap;
+  final dynamic snap;
   const CommentsScreen({Key? key, required this.snap}) : super(key: key);
 
   @override
@@ -31,6 +32,7 @@ class _CommentsScreen extends State<CommentsScreen> {
   @override
   Widget build(BuildContext context) {
 
+    final width = MediaQuery.of(context).size.width;
     final User user = Provider
         .of<UserProvider>(context)
         .getUser;
@@ -41,8 +43,14 @@ class _CommentsScreen extends State<CommentsScreen> {
           leading: Builder(
             builder: (context) {
               return IconButton(
-                  icon: Icon(Icons.arrow_back),
-                  onPressed: () => Navigator.push(context,MaterialPageRoute(builder: (context) => WebScreenLayout())));
+                  icon: const Icon(Icons.arrow_back),
+                  onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => width < webScreenSize ? const MobileScreenLayout(): const WebScreenLayout()
+                      )
+                  )
+              );
             },
           ),
           title: const Text('Comments'),
