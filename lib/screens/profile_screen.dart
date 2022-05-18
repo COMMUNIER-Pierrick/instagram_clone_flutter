@@ -7,7 +7,10 @@ import 'package:instagram_clone/screens/login_screen.dart';
 import 'package:instagram_clone/utils/utils.dart';
 import 'package:instagram_clone/widgets/follow_button.dart';
 
+import '../responsive/mobile_screen_layout.dart';
+import '../responsive/web_screen_layout.dart';
 import '../utils/colors.dart';
+import '../utils/dimensions.dart';
 
 class ProfileScreen extends StatefulWidget {
   final String uid;
@@ -64,14 +67,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    final width = MediaQuery.of(context).size.width;
+
     return isLoading
         ? const Center(
             child: CircularProgressIndicator(),
           )
         : Scaffold(
             appBar: AppBar(
-              automaticallyImplyLeading: false,
               backgroundColor: mobileBackgroundColor,
+              leading: Builder(
+                builder: (context) {
+                  return IconButton(
+                      icon: Icon(Icons.arrow_back),
+                      onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => width < webScreenSize ? MobileScreenLayout(): WebScreenLayout()
+                          )
+                      )
+                  );
+                },
+              ),
               title: Text(
                 userData['username'],
               ),
