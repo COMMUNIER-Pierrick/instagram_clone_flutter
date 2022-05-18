@@ -10,19 +10,21 @@ import 'package:instagram_clone/screens/login_screen.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:provider/provider.dart';
 
+import 'config/web.dart';
+
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  if(kIsWeb) {
-    await Firebase.initializeApp(
-      options: const FirebaseOptions(
-        apiKey: "AIzaSyCS-Te0PwHd2vLtPFQWKHi8ulxsttxDKuE",
-        appId: "1:201041027745:web:cc532e65d07f27b08586e0",
-        messagingSenderId: "201041027745",
-        projectId: "instagram-clone-c0954",
-        storageBucket: "instagram-clone-c0954.appspot.com",
-      ),
-    );
-  }else {
+   if(kIsWeb) {
+     await Firebase.initializeApp(
+       options: const FirebaseOptions(
+         apiKey: apiKey,
+         appId: appId,
+         messagingSenderId: messagingSenderId,
+         projectId: projectId,
+         storageBucket: storageBucket,
+        ),
+     );
+   }else {
     await Firebase.initializeApp();
   }
   runApp(const MyApp());
