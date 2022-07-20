@@ -47,7 +47,7 @@ class FeedScreen extends StatelessWidget {
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (ctx, index) => Container(
               margin: EdgeInsets.symmetric(
-                horizontal: width > webScreenSize ? width * 0.3 : 0,
+                horizontal: width > webScreenSize ? width * 0.35 : 0,
                 vertical: width > webScreenSize ? 15 : 0,
               ),
               child: PostCard(

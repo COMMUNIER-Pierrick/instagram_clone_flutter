@@ -42,4 +42,19 @@ class User {
       following: snapshot['following'],
     );
   }
+
+  List<User> dataListFromSnapshot(QuerySnapshot querySnapshot) {
+    return querySnapshot.docs.map((snapshot) {
+      final Map<String, dynamic> dataMap = snapshot.data() as Map<String, dynamic>;
+
+      return User(
+        uid: dataMap['uid'],
+        email: dataMap['email'],
+        photoUrl: dataMap['photoUrl'],
+        username: dataMap['username'],
+        bio: dataMap['bio'],
+        followers: dataMap['followers'],
+        following: dataMap['following']);
+    }).toList();
+  }
 }

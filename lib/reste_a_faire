@@ -1,0 +1,31 @@
+- Vérifier les entrée lors de l'inscription (
+    - remplacer les accents au niveaux des username
+)
+
+- Ajouter un chat dans l'appli
+
+- Faire le menu du profil (
+    - pouvoir mettre a jour les informations du profil.
+)
+
+- Faire un menu de settings (
+    - modifier le theme de l'appli.
+)
+
+- Ajouter la fonctionnalité pour les likes de commentaires
+
+- Mettre la fonctionaliter add post dans un dialog au click de icone (Web & Andoid).
+
+- Creer la page explorer Web (
+    - grid view d'image de post random.
+    - dialog sur le clic ouvrant le detail du post (image + commentaire).
+    - le tout dans un carrousel qui suit le grid view.
+)
+
+- mettre en place le système de notification (Web & Android).
+
+- mettre ces options sur les username dans les posts, recherche (
+    overflow: TextOverflow.fade,
+    maxLines: 1,
+    softWrap: false,
+)

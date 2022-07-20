@@ -6,6 +6,7 @@ import 'package:instagram_clone/providers/user_provider.dart';
 import 'package:instagram_clone/responsive/mobile_screen_layout.dart';
 import 'package:instagram_clone/responsive/responsive_layout_screen.dart';
 import 'package:instagram_clone/responsive/web_screen_layout.dart';
+import 'package:instagram_clone/responsive/web_screen_test.dart';
 import 'package:instagram_clone/screens/login_screen.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:provider/provider.dart';
@@ -55,7 +56,7 @@ class MyApp extends StatelessWidget {
                 if(snapshot.hasData){
                   return const ResponsiveLayout(
                     mobileScreenLayout: MobileScreenLayout(),
-                    webScreenLayout: WebScreenLayout(),
+                    webScreenLayout: WebScreenTest(),
                   );
                 }else if(snapshot.hasError) {
                   return Center(

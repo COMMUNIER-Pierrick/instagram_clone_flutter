@@ -52,8 +52,8 @@ class _SignupScreenState extends State<SignupScreen> {
     String res = await AuthMethods().signUpUser(
       email: _emailController.text,
       password: _passwordController.text,
-      username: _usernameController.text,
-      bio: _bioController.text,
+      username: _usernameController.text.toLowerCase(),
+      bio: _captalize(_bioController.text),
       file: _image!,
     );
 
@@ -73,6 +73,10 @@ class _SignupScreenState extends State<SignupScreen> {
         ),
       );
     }
+  }
+
+  String _captalize(String text) {
+    return text.substring(0,1).toUpperCase() + text.substring(1,text.length);
   }
 
   void navigateToLogin() {
