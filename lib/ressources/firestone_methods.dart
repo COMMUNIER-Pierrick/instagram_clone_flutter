@@ -57,6 +57,22 @@ class FirestoreMethods {
     }
   }
 
+  Future<void> likeComment(String postId, String commentId, String uid, List likes) async {
+    try{
+      if(likes.contains(uid)) {
+        await _firestore.collection('posts').doc(postId).collection('comments').doc(commentId).update({
+          'likes' : FieldValue.arrayRemove([uid]),
+        });
+      }else{
+        await _firestore.collection('posts').doc(postId).collection('comments').doc(commentId).update({
+          'likes' : FieldValue.arrayUnion([uid]),
+        });
+      }
+    }catch(e){
+      print(e.toString(),);
+    }
+  }
+
   Future<String> postComment(String postId, String text, String uid, String name, String profilePic) async {
 
     String res = "Some error occurred";
@@ -70,6 +86,8 @@ class FirestoreMethods {
           'text': text,
           'commentId': commentId,
           'datePublished': DateTime.now(),
+          'likes': [],
+          'postId': postId,
         });
         res = 'success';
       } else {
