@@ -41,9 +41,11 @@ class _PostCardState extends State<PostCard> {
     }catch(e){
       showSnackBar(e.toString(), context);
     }
-    if(mounted) setState(() {
+    if(mounted) {
+      setState(() {
 
     });
+    }
   }
 
   @override
@@ -143,9 +145,11 @@ class _PostCardState extends State<PostCard> {
                   user.uid,
                   widget.snap['likes'],
                 );
-                if(mounted) setState(() {
+                if(mounted) {
+                  setState(() {
                   isLikeAnimating = true;
                 });
+                }
               },
               child: Stack(
                 alignment: Alignment.center,
@@ -167,20 +171,22 @@ class _PostCardState extends State<PostCard> {
                     ),
                     opacity: isLikeAnimating ? 1 : 0,
                     child: LikeAnimation(
-                      child: const Icon(
-                        Icons.favorite,
-                        color: primaryColor,
-                        size: 100,
-                      ),
                       isAnimating: isLikeAnimating,
                       duration: const Duration(
                         milliseconds: 400,
                       ),
                       onEnd: () {
-                        if(mounted) setState(() {
+                        if(mounted) {
+                          setState(() {
                           isLikeAnimating = false;
                         });
+                        }
                       },
+                      child: const Icon(
+                        Icons.favorite,
+                        color: primaryColor,
+                        size: 100,
+                      ),
                     ),
                   ),
                 ],
