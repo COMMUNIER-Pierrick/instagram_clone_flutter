@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/ressources/auth_methods.dart';
 import 'package:instagram_clone/ressources/firestone_methods.dart';
-import 'package:instagram_clone/screens/login_screen.dart';
 import 'package:instagram_clone/utils/utils.dart';
 import 'package:instagram_clone/widgets/follow_button.dart';
 
@@ -80,11 +79,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               leading: Builder(
                 builder: (context) {
                   return IconButton(
-                      icon: Icon(Icons.arrow_back),
+                      icon: const Icon(Icons.arrow_back),
                       onPressed: () => Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => width < webScreenSize ? MobileScreenLayout(): WebScreenLayout()
+                              builder: (context) => width < webScreenSize ? const MobileScreenLayout(): const WebScreenLayout()
                           )
                       )
                   );
@@ -133,12 +132,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     textColor: primaryColor,
                                     text: 'Sign out',
                                     function: () async {
-                                      await AuthMethods().signOut();
-                                      Navigator.of(context).pushReplacement(
-                                        MaterialPageRoute(
-                                          builder: (context) => const LoginScreen(),
-                                        ),
-                                      );
+                                      await AuthMethods().signOut(context);
                                     },
                                   ): isFollowing ?
                                   FollowButton(
@@ -184,7 +178,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       padding: const EdgeInsets.only(top: 15),
                       child: Text(
                         userData['username'],
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -219,13 +213,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     itemBuilder: (context, index) {
                       DocumentSnapshot snap = (snapshot.data! as dynamic).docs[index];
-                      return Container(
-                        child: Image(
-                          image: NetworkImage(
-                              snap['postUrl'],
-                          ),
-                          fit: BoxFit.cover,
+                      return Image(
+                        image: NetworkImage(
+                            snap['postUrl'],
                         ),
+                        fit: BoxFit.cover,
                       );
                     },
                   );

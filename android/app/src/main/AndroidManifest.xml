@@ -1,10 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools" package="com.example.instagram_clone">
+          xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.instagram_clone">
     <application
             android:label="instagram_clone"
             android:icon="@mipmap/ic_launcher">
         <activity
                 android:name=".MainActivity"
+                android:exported="true"
                 android:launchMode="singleTop"
                 android:theme="@style/LaunchTheme"
                 android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"

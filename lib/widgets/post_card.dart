@@ -13,7 +13,7 @@ import '../ressources/firestone_methods.dart';
 import '../screens/comments_screen.dart';
 
 class PostCard extends StatefulWidget {
-  final snap;
+  final dynamic snap;
   const PostCard({
     Key? key,
     required this.snap,
@@ -47,6 +47,7 @@ class _PostCardState extends State<PostCard> {
     });
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -260,7 +261,7 @@ class _PostCardState extends State<PostCard> {
                   style: Theme
                       .of(context)
                       .textTheme
-                      .subtitle2!
+                      .titleSmall!
                       .copyWith(
                     fontWeight: FontWeight.w800,
                   ),
@@ -269,7 +270,7 @@ class _PostCardState extends State<PostCard> {
                     style: Theme
                         .of(context)
                         .textTheme
-                        .bodyText2,
+                        .bodyMedium,
                   ),
                 ),
                 Container(

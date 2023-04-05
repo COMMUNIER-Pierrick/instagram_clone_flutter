@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
@@ -17,7 +18,7 @@ class SignupScreen extends StatefulWidget {
   const SignupScreen({ Key? key}) : super(key: key);
 
   @override
-  _SignupScreenState createState() => _SignupScreenState();
+  State<SignupScreen> createState() => _SignupScreenState();
 }
 
 class _SignupScreenState extends State<SignupScreen> {
@@ -45,44 +46,92 @@ class _SignupScreenState extends State<SignupScreen> {
     });
   }
 
-  void signUpUser() async {
+  Future<String> signUpUser() async {
+
     setState(() {
       _isLoading = true;
     });
-    String res = await AuthMethods().signUpUser(
-      email: _emailController.text,
-      password: _passwordController.text,
-      username: _usernameController.text.toLowerCase(),
-      bio: _captalize(_bioController.text),
-      file: _image!,
-    );
 
-    setState(() {
-      _isLoading = false;
-    });
+    try{
 
-    if(res != 'success') {
-      showSnackBar(res, context);
-    }else {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-            builder: (context) => const ResponsiveLayout(
-              mobileScreenLayout: MobileScreenLayout(),
-              webScreenLayout: WebScreenLayout(),
-            ),
-        ),
+      if(_emailController.text.isEmpty){
+        return "Veuillez renseigner une adresse email.";
+      }else if(!EmailValidator.validate(_emailController.text)){
+        return "L'adresse email est invalide.";
+      }else if(_passwordController.text.isEmpty){
+        return "Veuillez renseigner un mot de passe.";
+      }else if(_usernameController.text.isEmpty){
+        return "Veuillez renseigner un pseudo.";
+      }else if(_bioController.text.isEmpty){
+        return "Veuillez renseigner une bio.";
+      }else if(_image == null){
+        return "Veuillez selectionner une photo de profil.";
+      }
+
+      String res = await AuthMethods().signUpUser(
+          email: _emailController.text,
+          password: _passwordController.text,
+          username: _usernameController.text.toLowerCase(),
+          bio: _capitalize(_bioController.text),
+          file: _image!,
       );
+
+      if (res == "success") {
+        setState(() {
+          _isLoading = false;
+        });
+        return "success";
+      } else {
+        setState(() {
+          _isLoading = false;
+        });
+        return "Une erreur est survenue lors de l'inscription.";
+      }
+    }catch(e){
+      _showSnackBar(e.toString());
+      rethrow;
     }
   }
 
-  String _captalize(String text) {
+  void _navigatorToScreenLayout() {
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (context) =>
+        const ResponsiveLayout(
+          mobileScreenLayout: MobileScreenLayout(),
+          webScreenLayout: WebScreenLayout(),
+        ),
+      ),
+    );
+  }
+
+  void _showSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          message,
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
+  }
+
+  String _capitalize(String text) {
     return text.substring(0,1).toUpperCase() + text.substring(1,text.length);
   }
 
-  void navigateToLogin() {
+  void _navigateToLogin() {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => const LoginScreen(),
+      ),
+    );
+  }
+
+  void _navigateToSignup() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const SignupScreen(),
       ),
     );
   }
@@ -102,7 +151,10 @@ class _SignupScreenState extends State<SignupScreen> {
                     //SVG image
                     SvgPicture.asset(
                       'assets/logo_instagram.svg',
-                      color: primaryColor,
+                      colorFilter: const ColorFilter.mode(
+                        primaryColor,
+                        BlendMode.srcIn,
+                      ),
                       height: 64,
                     ),
                     const SizedBox(height: 64),
@@ -182,7 +234,16 @@ class _SignupScreenState extends State<SignupScreen> {
                                 borderRadius: BorderRadius.all(Radius.circular(4),)
                             ),
                             fillColor: blueColor,
-                            onPressed: signUpUser,
+                            onPressed: () async {
+                              final success = await signUpUser();
+                              if (success == "success") {
+                                _navigatorToScreenLayout;
+                              } else {
+                                _showSnackBar(success);
+                                _isLoading = false;
+                                _navigateToSignup;
+                              }
+                            },
                             child: _isLoading
                                 ? const Center(child: CircularProgressIndicator(
                               color: primaryColor,
@@ -215,7 +276,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         SizedBox(
                           child:
                           RawMaterialButton(
-                            onPressed: navigateToLogin,
+                            onPressed: _navigateToLogin,
                             child: const Text(
                               'Login.',
                               style: TextStyle(

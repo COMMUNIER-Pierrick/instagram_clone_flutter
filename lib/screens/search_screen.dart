@@ -1,12 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firestore_search/firestore_search.dart';
 import 'package:flutter/material.dart';
-import 'package:instagram_clone/models/userDataModel.dart';
+import 'package:instagram_clone/models/user_data_model.dart';
 import 'package:instagram_clone/screens/profile_screen.dart';
 
-import '../models/user.dart';
 import '../utils/colors.dart';
-import '../utils/dimensions.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({ Key? key}) : super(key: key);
@@ -28,10 +26,6 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery
-        .of(context)
-        .size
-        .width;
 
     return FirestoreSearchScaffold(
         firestoreCollectionName: 'users',
@@ -64,7 +58,7 @@ class _SearchScreenState extends State<SearchScreen> {
             );
           },
         ),
-        dataListFromSnapshot: UserDataModel().dataListFromSnapshot,
+        dataListFromSnapshot: const UserDataModel().dataListFromSnapshot,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final List<UserDataModel>? usersList = snapshot.data;

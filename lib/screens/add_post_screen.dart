@@ -23,7 +23,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
   final TextEditingController _descriptionController = TextEditingController();
   bool _isLoading = false;
 
-  void postImage( String uid, String username, String profImage) async {
+  Future<String> postImage( String uid, String username, String profImage) async {
     setState(() {
       _isLoading = true;
     });
@@ -39,16 +39,17 @@ class _AddPostScreenState extends State<AddPostScreen> {
         setState(() {
           _isLoading = false;
         });
-        showSnackBar('Posted !', context);
         clearImage();
+        return "success";
       }else {
         setState(() {
           _isLoading = false;
         });
-        showSnackBar(res, context);
+        return "failed";
       }
     }catch(e){
-      showSnackBar(e.toString(), context);
+      _showSnackBar(e.toString());
+      rethrow;
     }
   }
 
@@ -103,6 +104,17 @@ class _AddPostScreenState extends State<AddPostScreen> {
     });
   }
 
+  void _showSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          message,
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
+  }
+
   @override
   void dispose () {
     super.dispose();
@@ -131,11 +143,14 @@ class _AddPostScreenState extends State<AddPostScreen> {
               title: const Text('Post to'),
               actions: [
                 TextButton(
-                  onPressed: () => postImage(
-                      user.uid,
-                      user.username,
-                      user.photoUrl)
-                  ,
+                  onPressed: () async {
+                    final success = await postImage(user.uid, user.username, user.photoUrl);
+                    if (success == "success") {
+                      _showSnackBar('Image postée avec succès!');
+                    } else {
+                      _showSnackBar('Une erreur est survenue lors du post de l\'image.');
+                    }
+                  },
                   child: const Text('Post',
                     style: TextStyle(
                       color: blueColor,
@@ -186,7 +201,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                         ),
                       ),
                     ),
-                    Divider(),
+                    const Divider(),
                   ],
                 )
               ],

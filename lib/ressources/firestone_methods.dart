@@ -53,7 +53,7 @@ class FirestoreMethods {
         });
       }
     }catch(e){
-      print(e.toString(),);
+      e.toString();
     }
   }
 
@@ -69,7 +69,7 @@ class FirestoreMethods {
         });
       }
     }catch(e){
-      print(e.toString(),);
+      e.toString();
     }
   }
 
@@ -135,7 +135,7 @@ class FirestoreMethods {
 
       }
     }catch(e) {
-      print(e.toString());
+      e.toString();
     }
   }
 

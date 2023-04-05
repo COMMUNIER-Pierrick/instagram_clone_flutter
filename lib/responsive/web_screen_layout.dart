@@ -6,7 +6,7 @@ import 'package:instagram_clone/screens/profile_screen.dart';
 import 'package:instagram_clone/utils/global_variables.dart';
 import 'package:provider/provider.dart';
 
-import '../models/userDataModel.dart';
+import '../models/user_data_model.dart';
 import '../providers/user_provider.dart';
 import '../utils/colors.dart';
 
@@ -65,18 +65,21 @@ class _WebScreenLayoutState extends State<WebScreenLayout> {
           centerTitle: false,
           actions: [
             Flexible(
-              child: Container(),
               flex: 2,
+              child: Container(),
             ),
             SvgPicture.asset(
               'assets/logo_instagram.svg',
-              color: Colors.white,
+              colorFilter: const ColorFilter.mode(
+                Colors.white,
+                BlendMode.srcIn,
+              ),
               height: 32,
             ),
             //if(MediaQuery.of(context).size.width > webScreenSize)
             Flexible(
-              child: Container(),
               flex: 1,
+              child: Container(),
             ),
             Container(
               constraints: const BoxConstraints(
@@ -89,8 +92,8 @@ class _WebScreenLayoutState extends State<WebScreenLayout> {
               ),
             ),
             Flexible(
-              child: Container(),
               flex: 1,
+              child: Container(),
             ),
             IconButton(
               onPressed: () => navigationTapped(0),
@@ -149,8 +152,8 @@ class _WebScreenLayoutState extends State<WebScreenLayout> {
                   ]),
             ),
             Flexible(
-              child: Container(),
               flex: 2,
+              child: Container(),
             ),
           ],
         ),
@@ -171,9 +174,9 @@ class _WebScreenLayoutState extends State<WebScreenLayout> {
               searchBy: 'username',
               initialBody: PageView(
                 physics: const NeverScrollableScrollPhysics(),
-                children: homeScreenItems,
                 controller: pageController,
                 onPageChanged: onPageChanged,
+                children: homeScreenItems,
               ),
               dataListFromSnapshot: const UserDataModel().dataListFromSnapshot,
               builder: (context, snapshot) {
