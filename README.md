@@ -14,8 +14,4 @@ L'application fonctionne actuellement sur **Android** et **Web**
 
 ⚠**Toujours en cours de développement**⚠
 
-
-
-     ⚠**Problème de dépendances**⚠
-     ⚠**En cours de résolutions**⚠
 **Edit le 13 JUIN 2023**
